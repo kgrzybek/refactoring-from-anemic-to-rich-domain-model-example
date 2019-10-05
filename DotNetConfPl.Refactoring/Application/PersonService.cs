@@ -49,17 +49,17 @@ namespace DotNetConfPl.Refactoring.Application
 
         public async Task SetPersonAsEmployee(Guid personId, Guid companyId, string email, string phone)
         {
-            if(await _companiesContext.Employees.AnyAsync(
-                x => x.PersonId == personId && 
-                     x.CompanyId == companyId && 
-                     x.ActiveTo == null))
-            {
-                throw new BusinessException("Person can be active Employee of Company more than once");
-            }
+            //if(await _companiesContext.Employees.AnyAsync(
+            //    x => x.PersonId == personId && 
+            //         x.CompanyId == companyId && 
+            //         x.ActiveTo == null))
+            //{
+            //    throw new BusinessException("Person can be active Employee of Company more than once");
+            //}
             
-            var employee = Employee.CreateNewEmployee(personId, companyId, email, phone);
+            //var employee = Employee.CreateNewEmployee(personId, companyId, email, phone);
 
-            await _companiesContext.Employees.AddAsync(employee);
+            //await _companiesContext.Employees.AddAsync(employee);
 
             await _companiesContext.SaveChangesAsync();
         }

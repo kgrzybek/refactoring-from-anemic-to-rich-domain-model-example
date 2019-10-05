@@ -23,10 +23,7 @@ namespace DotNetConfPl.Refactoring.Application
 
         public async Task<List<CompanyDto>> GetAllCompanies()
         {
-           // var companies = await _companiesContext.Companies.Include(x => x.ContactEmployee.Person).ToListAsync();
-
-           return new List<CompanyDto>();
-        //    return companies.Select(MapCompanyToDto).ToList();
+            return await _companiesContext.CompanyDtos.ToListAsync();
         }
 
         public async Task CreateCompany(string name)
