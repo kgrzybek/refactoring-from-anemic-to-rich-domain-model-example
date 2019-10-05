@@ -23,9 +23,10 @@ namespace DotNetConfPl.Refactoring.Application
 
         public async Task<List<CompanyDto>> GetAllCompanies()
         {
-            var companies = await _companiesContext.Companies.Include(x => x.ContactEmployee.Person).ToListAsync();
+           // var companies = await _companiesContext.Companies.Include(x => x.ContactEmployee.Person).ToListAsync();
 
-            return companies.Select(MapCompanyToDto).ToList();
+           return new List<CompanyDto>();
+        //    return companies.Select(MapCompanyToDto).ToList();
         }
 
         public async Task CreateCompany(string name)
@@ -61,9 +62,9 @@ namespace DotNetConfPl.Refactoring.Application
             companyDto.Id = company.Id;
             companyDto.Name = company.Name;
             companyDto.Source = company.Source;
-            companyDto.ContactEmployeeFullName = company.ContactEmployee?.Person.FullName;
-            companyDto.ContactEmployeeEmail = company.ContactEmployee?.Email;
-            companyDto.ContactEmployeePhone = company.ContactEmployee?.Phone;
+            companyDto.ContactEmployeeFullName = company.ContactEmployee().Person.FullName;
+            companyDto.ContactEmployeeEmail = company.ContactEmployee().Email;
+            companyDto.ContactEmployeePhone = company.ContactEmployee().Phone;
 
             return companyDto;
         }

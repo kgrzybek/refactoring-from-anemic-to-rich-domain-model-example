@@ -12,7 +12,14 @@ namespace DotNetConfPl.Refactoring.Infrastructure
 
             builder.HasKey(b => b.Id);
 
-            builder.HasOne(x => x.ContactEmployee).WithMany().HasForeignKey(x => x.ContactEmployeeId);
+            builder.OwnsMany<Employee>("_employees", employee =>
+            {
+                employee.ToTable("Employees", "companies");
+
+                employee.HasKey(b =>  b.Id);
+
+                employee.HasForeignKey("CompanyId");
+            });
         }
     }
 }

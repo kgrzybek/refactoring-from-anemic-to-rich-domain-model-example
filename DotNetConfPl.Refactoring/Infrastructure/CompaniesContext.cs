@@ -19,7 +19,6 @@ namespace DotNetConfPl.Refactoring.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new EmployeeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PersonEntityTypeConfiguration());
         }
     }

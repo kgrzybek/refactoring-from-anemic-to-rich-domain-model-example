@@ -37,7 +37,7 @@ namespace DotNetConfPl.Refactoring.Domain
             this.ActiveFrom = DateTime.UtcNow;
         }
 
-        public static Employee CreateNewEmployee(Guid personId, Guid companyId, string email, string phone)
+        internal static Employee CreateNewEmployee(Guid personId, Guid companyId, string email, string phone)
         {
             return new Employee(personId, companyId, email, phone);
         }
