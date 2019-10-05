@@ -38,9 +38,7 @@ namespace DotNetConfPl.Refactoring.Application
                 throw new BusinessException("Company name must be unique");
             }
 
-            var company = new Company();
-            company.Name = name;
-            company.Source = "Entered";
+            var company = Company.CreateEntered(name);
 
             _companiesContext.Add(company);
 
@@ -83,9 +81,7 @@ namespace DotNetConfPl.Refactoring.Application
                 throw new BusinessException("Company name must be unique");
             }
 
-            var company = new Company();
-            company.Name = name;
-            company.Source = "Imported";
+            var company = Company.CreateImported(name);
 
             _companiesContext.Add(company);
 
