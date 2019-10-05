@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using DotNetConfPl.Refactoring.Application;
+using DotNetConfPl.Refactoring.Domain;
 using DotNetConfPl.Refactoring.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,8 @@ namespace DotNetConfPl.Refactoring
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IPersonService, PersonService>();
+
+            services.AddScoped<ICompaniesCounter, CompaniesCounter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

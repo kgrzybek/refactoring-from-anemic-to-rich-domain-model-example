@@ -19,28 +19,33 @@ namespace DotNetConfPl.Refactoring.Domain
             
         }
 
-        private Company(string name, string source)
+        private Company(string name, string source, ICompaniesCounter companiesCounter)
         {
-            SetName(name);
+            SetName(name, companiesCounter);
             
             this.Source = source;
         }
 
-        public static Company CreateEntered(string name)
+        public static Company CreateEntered(string name, ICompaniesCounter companiesCounter)
         {
-            return new Company(name, "Entered");
+            return new Company(name, "Entered", companiesCounter);
         }
 
-        public static Company CreateImported(string name)
+        public static Company CreateImported(string name, ICompaniesCounter companiesCounter)
         {   
-            return new Company(name, "Imported");
+            return new Company(name, "Imported", companiesCounter);
         }
 
-        public void SetName(string name)
+        public void SetName(string name, ICompaniesCounter companiesCounter)
         {
             if (string.IsNullOrEmpty(name))
             {
                 throw new BusinessException("Company name must be provided");
+            }
+
+            if (companiesCounter.CountCompaniesByName(name) > 0)
+            {
+                throw new BusinessException("Company name must be unique");
             }
 
             if (this.Name == name)

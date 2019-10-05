@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DotNetConfPl.Refactoring.Controllers;
 using DotNetConfPl.Refactoring.Controllers.Companies;
 using DotNetConfPl.Refactoring.Domain;
 using DotNetConfPl.Refactoring.Infrastructure;
@@ -13,10 +12,13 @@ namespace DotNetConfPl.Refactoring.Application
     public class CompanyService : ICompanyService
     {
         private readonly CompaniesContext _companiesContext;
+        private readonly ICompaniesCounter _companiesCounter;
 
-        public CompanyService(CompaniesContext companiesContext)
+        public CompanyService(CompaniesContext companiesContext, 
+            ICompaniesCounter companiesCounter)
         {
             _companiesContext = companiesContext;
+            _companiesCounter = companiesCounter;
         }
 
         public async Task<List<CompanyDto>> GetAllCompanies()
@@ -28,39 +30,25 @@ namespace DotNetConfPl.Refactoring.Application
 
         public async Task CreateCompany(string name)
         {
-            await ValidateName(name);
-
-            var company = Company.CreateEntered(name);
+            var company = Company.CreateEntered(name, _companiesCounter);
 
             _companiesContext.Add(company);
 
             await _companiesContext.SaveChangesAsync();
         }
 
-        private async Task ValidateName(string name)
-        {
-            if (await _companiesContext.Companies.AnyAsync(x => x.Name == name))
-            {
-                throw new BusinessException("Company name must be unique");
-            }
-        }
-
         public async Task EditCompany(Guid companyId, string name)
         {
             var company = await _companiesContext.Companies.SingleOrDefaultAsync(x => x.Id == companyId);
 
-            await ValidateName(name);
-
-            company.SetName(name);
+            company.SetName(name, _companiesCounter);
 
             await _companiesContext.SaveChangesAsync();
         }
 
         public async Task ImportCompany(string name)
         {
-            await ValidateName(name);
-
-            var company = Company.CreateImported(name);
+            var company = Company.CreateImported(name, _companiesCounter);
 
             _companiesContext.Add(company);
 
