@@ -124,5 +124,17 @@ namespace DotNetConfPl.Refactoring.Domain
 
             this.Name = name;
         }
+
+        public void Deactivate(Guid employeeId)
+        {
+            var employee = _employees.SingleOrDefault(x => x.Id == employeeId && x.ActiveTo == null);
+
+            if (employee == null)
+            {
+                throw new BusinessException("Employee cannot be deactivated more than once");
+            }
+
+            employee.Deactivate();                
+        }
     }
 }

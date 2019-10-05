@@ -45,5 +45,10 @@ namespace DotNetConfPl.Refactoring.Domain
             this.Email = email;
             this.Phone = phone;
         }
+
+        internal void Deactivate()
+        {
+            this.ActiveTo = DateTime.UtcNow;
+        }
     }
 }

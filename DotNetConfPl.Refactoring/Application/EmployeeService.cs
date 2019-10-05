@@ -49,14 +49,11 @@ namespace DotNetConfPl.Refactoring.Application
 
         public async Task DeactivateEmployee(Guid companyId, Guid employeeId)
         {
-            //var employee = await _companiesContext.Employees.SingleOrDefaultAsync(x => x.CompanyId == companyId && x.Id == employeeId && x.ActiveTo == null);
+            var company = await _companiesContext.Companies.SingleAsync(x => x.Id == companyId);
 
-            //if (employee == null)
-            //{
-            //    throw new BusinessException("Employee cannot be deactivated more than once");
-            //}
+            company.Deactivate(employeeId);
 
-            //employee.ActiveTo = DateTime.UtcNow;
+
 
             await _companiesContext.SaveChangesAsync();
         }
