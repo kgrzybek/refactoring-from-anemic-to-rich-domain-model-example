@@ -42,26 +42,7 @@ namespace DotNetConfPl.Refactoring.Application
         {
             var person = await _companiesContext.Persons.SingleAsync(x => x.Id == personId);
 
-            if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
-            {
-                throw new BusinessException("Person must have defined first or last name");
-            }
-
-            person.FirstName = firstName;
-            person.LastName = lastName;
-            
-            if (string.IsNullOrEmpty(firstName))
-            {
-                person.FullName = lastName;
-            }
-            else if (string.IsNullOrEmpty(lastName))
-            {
-                person.FullName = firstName;
-            }
-            else
-            {
-                person.FullName = $"{firstName} {lastName}";
-            }
+            person.SetPersonNames(firstName, lastName);
 
             await _companiesContext.SaveChangesAsync();
         }

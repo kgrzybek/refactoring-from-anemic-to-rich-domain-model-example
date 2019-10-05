@@ -33,15 +33,7 @@ namespace DotNetConfPl.Refactoring.Application
         public async Task AddEmployee(Guid companyId, string firstName, string lastName, 
             string phone, string email, bool isContactEmployee)
         {
-            var person = new Person();
-            person.Id = Guid.NewGuid();
-            person.FirstName = firstName;
-            person.LastName = lastName;
-
-            if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
-            {
-                throw new BusinessException("Person must have defined first or last name");
-            }
+            var person = Person.CreateEmployeePerson(firstName, lastName);
 
             if (!string.IsNullOrEmpty(email))
             {
@@ -57,19 +49,6 @@ namespace DotNetConfPl.Refactoring.Application
                 {
                     throw new BusinessException("Employee phone number must be unique in company");
                 }
-            }
-
-            if (string.IsNullOrEmpty(firstName))
-            {
-                person.FullName = lastName;
-            }
-            else if (string.IsNullOrEmpty(lastName))
-            {
-                person.FullName = firstName;
-            }
-            else
-            {
-                person.FullName = $"{firstName} {lastName}";
             }
 
             var employee = new Employee();
