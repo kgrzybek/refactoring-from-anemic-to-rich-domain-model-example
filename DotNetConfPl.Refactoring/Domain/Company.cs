@@ -6,7 +6,7 @@ namespace DotNetConfPl.Refactoring.Domain
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         public Employee ContactEmployee { get; set; }
 
@@ -32,16 +32,20 @@ namespace DotNetConfPl.Refactoring.Domain
         }
 
         public static Company CreateImported(string name)
-        {
-            
+        {   
             return new Company(name, "Imported");
         }
 
-        private void SetName(string name)
+        public void SetName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
                 throw new BusinessException("Company name must be provided");
+            }
+
+            if (this.Name == name)
+            {
+                return;
             }
 
             this.Name = name;

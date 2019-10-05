@@ -49,14 +49,9 @@ namespace DotNetConfPl.Refactoring.Application
         {
             var company = await _companiesContext.Companies.SingleOrDefaultAsync(x => x.Id == companyId);
 
-            if (company.Name == name)
-            {
-                return;
-            }
-
             await ValidateName(name);
 
-            company.Name = name;
+            company.SetName(name);
 
             await _companiesContext.SaveChangesAsync();
         }
