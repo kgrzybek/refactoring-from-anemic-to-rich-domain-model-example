@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace DotNetConfPl.Refactoring.Domain
 {
@@ -21,6 +22,7 @@ namespace DotNetConfPl.Refactoring.Domain
 
         private Company(string name, string source)
         {
+            ValidateName(name);
             this.Name = name;
             this.Source = source;
         }
@@ -32,7 +34,16 @@ namespace DotNetConfPl.Refactoring.Domain
 
         public static Company CreateImported(string name)
         {
+            
             return new Company(name, "Imported");
+        }
+
+        private static void ValidateName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new BusinessException("Company name must be provided");
+            }
         }
     }
 }

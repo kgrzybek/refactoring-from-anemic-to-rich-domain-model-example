@@ -39,11 +39,6 @@ namespace DotNetConfPl.Refactoring.Application
 
         private async Task ValidateName(string name)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new BusinessException("Company name must be provided");
-            }
-
             if (await _companiesContext.Companies.AnyAsync(x => x.Name == name))
             {
                 throw new BusinessException("Company name must be unique");
