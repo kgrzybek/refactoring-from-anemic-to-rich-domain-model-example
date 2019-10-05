@@ -20,5 +20,7 @@ namespace DotNetConfPl.Refactoring.Controllers.Employees
         public DateTime? ActiveTo { get; set; }
 
         public Guid PersonId { get; set; }
+
+        public bool IsContact { get; set; }
     }
 }

@@ -64,6 +64,37 @@ namespace DotNetConfPl.Refactoring.Domain
             _employees.Add(employee);
         }
 
+        public void ChangeEmployeeContact(Guid employeeId, string phone, string email)
+        {
+            if (string.IsNullOrEmpty(phone) && string.IsNullOrEmpty(email))
+            {
+                if (this.ContactEmployeeId == employeeId)
+                {
+                    throw new BusinessException("Contact person must have e-mail or phone provided");
+                }
+            }
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                if (_employees.Any(x => x.Email == email && x.ActiveTo == null))
+                {
+                    throw new BusinessException("Employee email address must be unique in company");
+                }
+            }
+
+            if (!string.IsNullOrEmpty(phone))
+            {
+                if (_employees.Any(x =>  x.Phone == phone && x.ActiveTo == null))
+                {
+                    throw new BusinessException("Employee phone number must be unique in company");
+                }
+            }
+
+            var employee = _employees.Single(x => x.Id == employeeId);
+
+            employee.ChangeContact(email, phone);
+        }
+
         public static Company CreateEntered(string name, ICompaniesCounter companiesCounter)
         {
             return new Company(name, "Entered", companiesCounter);

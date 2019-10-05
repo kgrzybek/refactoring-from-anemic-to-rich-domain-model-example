@@ -42,34 +42,7 @@ namespace DotNetConfPl.Refactoring.Application
         {
             var company = await _companiesContext.Companies.SingleAsync(x => x.Id == companyId);
 
-            if (string.IsNullOrEmpty(phone) && string.IsNullOrEmpty(email))
-            {
-                if (company.ContactEmployeeId == employeeId)
-                {
-                    throw new BusinessException("Contact person must have e-mail or phone provided");
-                }
-            }
-
-            //if (!string.IsNullOrEmpty(email))
-            //{
-            //    if (await _companiesContext.Employees.AnyAsync(x => x.Id == companyId && x.Email == email && x.ActiveTo == null))
-            //    {
-            //        throw new BusinessException("Employee email address must be unique in company");
-            //    }
-            //}
-
-            //if (!string.IsNullOrEmpty(phone))
-            //{
-            //    if (await _companiesContext.Employees.AnyAsync(x => x.Id == companyId && x.Phone == phone && x.ActiveTo == null))
-            //    {
-            //        throw new BusinessException("Employee phone number must be unique in company");
-            //    }
-            //}
-
-            //var employee = await _companiesContext.Employees.SingleAsync(x => x.Id == employeeId);
-
-            //employee.Email = email;
-            //employee.Phone = phone;
+            company.ChangeEmployeeContact(employeeId, phone, email);
 
             await _companiesContext.SaveChangesAsync();
         }

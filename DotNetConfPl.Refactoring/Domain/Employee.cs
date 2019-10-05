@@ -12,8 +12,6 @@ namespace DotNetConfPl.Refactoring.Domain
 
         public Guid CompanyId { get; set; }
 
-        public Company Company { get; set; }
-
         public string Email { get; set; }
 
         public string Phone { get; set; }
@@ -40,6 +38,12 @@ namespace DotNetConfPl.Refactoring.Domain
         internal static Employee CreateNewEmployee(Guid personId, Guid companyId, string email, string phone)
         {
             return new Employee(personId, companyId, email, phone);
+        }
+
+        internal void ChangeContact(string email, string phone)
+        {
+            this.Email = email;
+            this.Phone = phone;
         }
     }
 }

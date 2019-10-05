@@ -18,7 +18,8 @@ namespace DotNetConfPl.Refactoring.Infrastructure
 
                 employee.HasKey(b =>  b.Id);
 
-                employee.HasForeignKey("CompanyId");
+                employee.Property(x => x.CompanyId);
+                employee.HasForeignKey(x => x.CompanyId);
             });
         }
     }
