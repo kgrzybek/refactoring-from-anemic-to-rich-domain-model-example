@@ -57,13 +57,7 @@ namespace DotNetConfPl.Refactoring.Application
                 throw new BusinessException("Person can be active Employee of Company more than once");
             }
             
-            var employee = new Employee();
-            employee.Id = Guid.NewGuid();
-            employee.PersonId = personId;
-            employee.CompanyId = companyId;
-            employee.ActiveFrom = DateTime.UtcNow;
-            employee.Email = email;
-            employee.Phone = phone;
+            var employee = Employee.CreateNewEmployee(personId, companyId, email, phone);
 
             await _companiesContext.Employees.AddAsync(employee);
 

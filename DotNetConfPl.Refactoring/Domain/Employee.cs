@@ -21,5 +21,25 @@ namespace DotNetConfPl.Refactoring.Domain
         public DateTime ActiveFrom { get; set; }
 
         public DateTime? ActiveTo { get; set; }
+
+        private Employee()
+        {
+
+        }
+
+        private Employee(Guid personId, Guid companyId, string email, string phone)
+        {
+            this.Id = Guid.NewGuid();
+            this.CompanyId = companyId;
+            this.PersonId = personId;
+            this.Email = email;
+            this.Phone = phone;
+            this.ActiveFrom = DateTime.UtcNow;
+        }
+
+        public static Employee CreateNewEmployee(Guid personId, Guid companyId, string email, string phone)
+        {
+            return new Employee(personId, companyId, email, phone);
+        }
     }
 }

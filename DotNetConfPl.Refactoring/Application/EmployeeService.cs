@@ -51,13 +51,7 @@ namespace DotNetConfPl.Refactoring.Application
                 }
             }
 
-            var employee = new Employee();
-            employee.Id = Guid.NewGuid();
-            employee.CompanyId = companyId;
-            employee.PersonId = person.Id;
-            employee.Email = email;
-            employee.Phone = phone;
-            employee.ActiveFrom = DateTime.UtcNow;
+            var employee = Employee.CreateNewEmployee(person.Id, companyId, email, phone);
 
             _companiesContext.Employees.Add(employee);
             _companiesContext.Persons.Add(person);
