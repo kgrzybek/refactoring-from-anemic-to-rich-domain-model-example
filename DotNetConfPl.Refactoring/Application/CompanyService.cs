@@ -28,6 +28,17 @@ namespace DotNetConfPl.Refactoring.Application
 
         public async Task CreateCompany(string name)
         {
+            await ValidateName(name);
+
+            var company = Company.CreateEntered(name);
+
+            _companiesContext.Add(company);
+
+            await _companiesContext.SaveChangesAsync();
+        }
+
+        private async Task ValidateName(string name)
+        {
             if (string.IsNullOrEmpty(name))
             {
                 throw new BusinessException("Company name must be provided");
@@ -37,12 +48,6 @@ namespace DotNetConfPl.Refactoring.Application
             {
                 throw new BusinessException("Company name must be unique");
             }
-
-            var company = Company.CreateEntered(name);
-
-            _companiesContext.Add(company);
-
-            await _companiesContext.SaveChangesAsync();
         }
 
         public async Task EditCompany(Guid companyId, string name)
@@ -54,15 +59,7 @@ namespace DotNetConfPl.Refactoring.Application
                 return;
             }
 
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new BusinessException("Company name must be provided");
-            }
-
-            if (await _companiesContext.Companies.AnyAsync(x => x.Name == name))
-            {
-                throw new BusinessException("Company name must be unique");
-            }
+            await ValidateName(name);
 
             company.Name = name;
 
@@ -71,15 +68,7 @@ namespace DotNetConfPl.Refactoring.Application
 
         public async Task ImportCompany(string name)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new BusinessException("Company name must be provided");
-            }
-
-            if (await _companiesContext.Companies.AnyAsync(x => x.Name == name))
-            {
-                throw new BusinessException("Company name must be unique");
-            }
+            await ValidateName(name);
 
             var company = Company.CreateImported(name);
 
